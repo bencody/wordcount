@@ -22,7 +22,7 @@ public class CliServiceTest {
 
         assertThat(outputPrinter.printLineCalls).containsExactly(
                 "Enter text: ",
-                "Number of words: 4, unique: 4"
+                "Number of words: 4, unique: 4; average word length: 4.25 characters"
         );
     }
 

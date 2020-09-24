@@ -37,6 +37,7 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(0L);
         assertThat(result.uniqueCount).isEqualTo(0L);
+        assertThat(result.averageWordLength).isEqualTo(0d);
     }
 
     @ParameterizedTest
@@ -48,6 +49,7 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(1L);
         assertThat(result.uniqueCount).isEqualTo(1L);
+        assertThat(result.averageWordLength).isEqualTo(1d);
     }
 
     @ParameterizedTest
@@ -59,6 +61,7 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(0L);
         assertThat(result.uniqueCount).isEqualTo(0L);
+        assertThat(result.averageWordLength).isEqualTo(0d);
     }
 
     @Test
@@ -69,6 +72,7 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(1L);
         assertThat(result.uniqueCount).isEqualTo(1L);
+        assertThat(result.averageWordLength).isEqualTo(1d);
     }
 
     @Test
@@ -80,6 +84,7 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(4L);
         assertThat(result.uniqueCount).isEqualTo(4L);
+        assertThat(result.averageWordLength).isEqualTo(4.25d); // avg(4, 3, 6, 4) = 4.25
     }
 
     @Test
@@ -90,10 +95,11 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(5L);
         assertThat(result.uniqueCount).isEqualTo(5L);
+        assertThat(result.averageWordLength).isEqualTo(3.6d); // avg(4, 3, 1, 6, 4) = 4.25
     }
 
     @Test
-    public void unique_words_are_also_counted() {
+    public void average_word_length_is_based_on_all_words_and_not_unique_words() {
         List<String> stopWords = Arrays.asList("the", "a", "on", "off");
         WordCounter wordCounter = new WordCounter(stopWords);
 
@@ -101,5 +107,6 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(7L);
         assertThat(result.uniqueCount).isEqualTo(6L);
+        assertThat(result.averageWordLength).isEqualTo((45d/7)); // avg(13, 3, 4, 13, 3, 5, 4) = 45/7
     }
 }

@@ -8,7 +8,8 @@ https://ccd-school.de/coding-dojo/agility-katas/word-count-i/
 ## Assumptions
 
 - Words must consist only of valid characters. "A1" would not be considered a word because the character "1" is not considered valid. 
-
+- Average word count is calculated based on all words, not unique words.
+- Average word count output should include exactly 2 decimal places and use English number formatting.
 
 ## Checklist
 

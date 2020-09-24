@@ -4,6 +4,7 @@ import at.sitsolutions.wordcount.domain.Result;
 import at.sitsolutions.wordcount.domain.WordCounter;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Callable;
 
 public class CliService implements Callable<Void> {
@@ -25,7 +26,9 @@ public class CliService implements Callable<Void> {
         List<String> text = inputReader.readLines();
         Result result = wordCounter.countWords(text);
 
-        outputPrinter.print(String.format("Number of words: %s, unique: %s", result.totalCount, result.uniqueCount));
+        String resultMessage = String.format(Locale.US, "Number of words: %s, unique: %s; average word length: %.2f characters",
+                result.totalCount, result.uniqueCount, result.averageWordLength);
+        outputPrinter.print(resultMessage);
         return null;
     }
 }
