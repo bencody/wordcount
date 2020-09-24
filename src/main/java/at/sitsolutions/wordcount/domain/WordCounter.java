@@ -12,11 +12,6 @@ public class WordCounter {
         if (text == null) {
             throw new IllegalArgumentException();
         }
-
-        RegexpUtils.streamMatches(WORD_REGEXP, text).forEach((w) -> {
-            System.out.println("word: " + w);
-        });
-
         return RegexpUtils.streamMatches(WORD_REGEXP, text).count();
     }
 }
