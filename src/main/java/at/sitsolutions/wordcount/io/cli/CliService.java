@@ -12,11 +12,13 @@ public class CliService implements Callable<Void> {
     private final InputReader inputReader;
     private final OutputPrinter outputPrinter;
     private final WordCounter wordCounter;
+    private final boolean printIndex;
 
-    public CliService(InputReader inputReader, OutputPrinter outputPrinter, WordCounter wordCounter) {
+    public CliService(InputReader inputReader, OutputPrinter outputPrinter, WordCounter wordCounter, boolean printIndex) {
         this.inputReader = inputReader;
         this.outputPrinter = outputPrinter;
         this.wordCounter = wordCounter;
+        this.printIndex = printIndex;
     }
 
     @Override
@@ -28,7 +30,15 @@ public class CliService implements Callable<Void> {
 
         String resultMessage = String.format(Locale.US, "Number of words: %s, unique: %s; average word length: %.2f characters",
                 result.totalCount, result.uniqueCount, result.averageWordLength);
-        outputPrinter.print(resultMessage);
+        outputPrinter.println(resultMessage);
+
+        if (this.printIndex) {
+            outputPrinter.println("Index:");
+            for (String word : result.words) {
+                outputPrinter.println(word);
+            }
+        }
+
         return null;
     }
 }

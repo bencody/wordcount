@@ -20,7 +20,7 @@ public class Main {
         WordCounter wordCounter = new WordCounter(stopWords);
         InputReader inputReader = createInputReader(arguments);
         OutputPrinter outputPrinter = new SystemOutputPrinter();
-        return new CliService(inputReader, outputPrinter, wordCounter);
+        return new CliService(inputReader, outputPrinter, wordCounter, arguments.printIndex);
     }
 
     private static InputReader createInputReader(MainArguments arguments) {

@@ -29,7 +29,7 @@ public class WordCounter {
         long uniqueCount = words.stream().distinct().count();
         double averageWordLength = words.stream().mapToInt(String::length).average().orElse(0d);
 
-        return new Result(totalCount, uniqueCount, averageWordLength);
+        return new Result(words, totalCount, uniqueCount, averageWordLength);
     }
 
     public Result countWords(List<String> textLines) {
