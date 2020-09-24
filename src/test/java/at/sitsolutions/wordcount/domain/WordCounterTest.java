@@ -99,7 +99,7 @@ public class WordCounterTest {
 
         Result result = wordCounter.countWords("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall.");
 
-        assertThat(result.totalCount).isEqualTo(9L);
-        assertThat(result.uniqueCount).isEqualTo(7L);
+        assertThat(result.totalCount).isEqualTo(7L);
+        assertThat(result.uniqueCount).isEqualTo(6L);
     }
 }

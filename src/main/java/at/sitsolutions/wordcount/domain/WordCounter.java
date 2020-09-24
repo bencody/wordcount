@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class WordCounter {
 
-    private static final Pattern WORD_REGEXP = Pattern.compile("(\\b[a-zA-Z]+\\b)", Pattern.UNICODE_CHARACTER_CLASS);
+    private static final Pattern WORD_REGEXP = Pattern.compile("(\\b[a-zA-Z-]+\\b)", Pattern.UNICODE_CHARACTER_CLASS);
 
     private final List<String> stopWords;
 
