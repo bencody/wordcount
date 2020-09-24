@@ -16,7 +16,7 @@ public class MainTest {
 
         Main.main(new String[]{});
 
-        assertThat(outputStream.toString()).isEqualTo("Enter text: Number of words: 4");
+        assertThat(outputStream.toString()).isEqualTo("Enter text: Number of words: 4, unique: 4");
     }
 
     @Test
@@ -25,6 +25,6 @@ public class MainTest {
 
         Main.main(new String[]{"src/test/resources/mytext.txt"});
 
-        assertThat(outputStream.toString()).isEqualTo("Enter text: Number of words: 4");
+        assertThat(outputStream.toString()).isEqualTo("Enter text: Number of words: 4, unique: 4");
     }
 }

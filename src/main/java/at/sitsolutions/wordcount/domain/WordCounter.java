@@ -16,16 +16,22 @@ public class WordCounter {
         this.stopWords = stopWords;
     }
 
-    public long countWords(String text) {
+    public Result countWords(String text) {
         if (text == null) {
             throw new IllegalArgumentException();
         }
-        return RegexpUtils.streamMatches(WORD_REGEXP, text)
+
+        List<String> words = RegexpUtils.streamMatches(WORD_REGEXP, text)
                 .filter((word) -> !stopWords.contains(word))
-                .count();
+                .collect(Collectors.toList());
+
+        long totalCount = words.size();
+        long uniqueCount = words.stream().distinct().count();
+
+        return new Result(totalCount, uniqueCount);
     }
 
-    public long countWords(List<String> textLines) {
+    public Result countWords(List<String> textLines) {
         if (textLines == null) {
             throw new IllegalArgumentException();
         }

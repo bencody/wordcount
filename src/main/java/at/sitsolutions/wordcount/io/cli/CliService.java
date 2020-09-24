@@ -1,5 +1,6 @@
 package at.sitsolutions.wordcount.io.cli;
 
+import at.sitsolutions.wordcount.domain.Result;
 import at.sitsolutions.wordcount.domain.WordCounter;
 
 import java.util.List;
@@ -22,9 +23,9 @@ public class CliService implements Callable<Void> {
         outputPrinter.print("Enter text: ");
 
         List<String> text = inputReader.readLines();
-        long wordCount = wordCounter.countWords(text);
+        Result result = wordCounter.countWords(text);
 
-        outputPrinter.print("Number of words: " + wordCount);
+        outputPrinter.print(String.format("Number of words: %s, unique: %s", result.totalCount, result.uniqueCount));
         return null;
     }
 }

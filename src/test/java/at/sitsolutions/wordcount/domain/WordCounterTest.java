@@ -33,9 +33,10 @@ public class WordCounterTest {
     public void empty_text_has_0_words() {
         WordCounter wordCounter = new WordCounter(Collections.emptyList());
 
-        long wordCount = wordCounter.countWords("");
+        Result result = wordCounter.countWords("");
 
-        assertThat(wordCount).isEqualTo(0L);
+        assertThat(result.totalCount).isEqualTo(0L);
+        assertThat(result.uniqueCount).isEqualTo(0L);
     }
 
     @ParameterizedTest
@@ -43,9 +44,10 @@ public class WordCounterTest {
     public void single_valid_character_text_has_1_word(String text) {
         WordCounter wordCounter = new WordCounter(Collections.emptyList());
 
-        long wordCount = wordCounter.countWords(text);
+        Result result = wordCounter.countWords(text);
 
-        assertThat(wordCount).isEqualTo(1L);
+        assertThat(result.totalCount).isEqualTo(1L);
+        assertThat(result.uniqueCount).isEqualTo(1L);
     }
 
     @ParameterizedTest
@@ -53,18 +55,20 @@ public class WordCounterTest {
     public void single_invalid_character_text_has_0_words(String text) {
         WordCounter wordCounter = new WordCounter(Collections.emptyList());
 
-        long wordCount = wordCounter.countWords(text);
+        Result result = wordCounter.countWords(text);
 
-        assertThat(wordCount).isEqualTo(0L);
+        assertThat(result.totalCount).isEqualTo(0L);
+        assertThat(result.uniqueCount).isEqualTo(0L);
     }
 
     @Test
     public void words_must_not_contain_any_invalid_character() {
         WordCounter wordCounter = new WordCounter(Collections.emptyList());
 
-        long wordCount = wordCounter.countWords("a1 b 3c 4");
+        Result result = wordCounter.countWords("a1 b 3c 4");
 
-        assertThat(wordCount).isEqualTo(1L);
+        assertThat(result.totalCount).isEqualTo(1L);
+        assertThat(result.uniqueCount).isEqualTo(1L);
     }
 
     @Test
@@ -72,17 +76,30 @@ public class WordCounterTest {
         List<String> stopWords = Arrays.asList("the", "a", "on", "off");
         WordCounter wordCounter = new WordCounter(stopWords);
 
-        long wordCount = wordCounter.countWords("Mary had a little lamb");
+        Result result = wordCounter.countWords("Mary had a little lamb");
 
-        assertThat(wordCount).isEqualTo(4L);
+        assertThat(result.totalCount).isEqualTo(4L);
+        assertThat(result.uniqueCount).isEqualTo(4L);
     }
 
     @Test
     public void strings_in_separate_lines_are_considered_separate_words() {
         WordCounter wordCounter = new WordCounter(Collections.emptyList());
 
-        long wordCount = wordCounter.countWords(Lists.newArrayList("Mary had", "a little", "lamb"));
+        Result result = wordCounter.countWords(Lists.newArrayList("Mary had", "a little", "lamb"));
 
-        assertThat(wordCount).isEqualTo(5L);
+        assertThat(result.totalCount).isEqualTo(5L);
+        assertThat(result.uniqueCount).isEqualTo(5L);
+    }
+
+    @Test
+    public void unique_words_are_also_counted() {
+        List<String> stopWords = Arrays.asList("the", "a", "on", "off");
+        WordCounter wordCounter = new WordCounter(stopWords);
+
+        Result result = wordCounter.countWords("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall.");
+
+        assertThat(result.totalCount).isEqualTo(9L);
+        assertThat(result.uniqueCount).isEqualTo(7L);
     }
 }
