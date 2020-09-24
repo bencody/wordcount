@@ -22,6 +22,10 @@ Since the iterations in this assessment are already very small, I don't always s
 
 Yes. 100% at the moment.
 
+If one strictly follows the principles of SoC and domain/IO separation, and starts writing tests for the smaller unit components first and later adds integration tests, some tests may be repetitive and execute the same implementation multiple times in the same way.
+
+Example: I created `at.sitsolutions.wordcount.io.cli.StdSystem`, `at.sitsolutions.wordcount.io.cli.CliService`, and `at.sitsolutions.wordcount.io.cli.Main` in that order. `StdSystemTest` made sense at first, but after I added `CliServiceTest` and `MainTest`, `StdSystemTest` became redundant. It did not add any value, so I decided to delete it to keep the test code more maintainable.
+
 ### Check for separate by concerns => What does it mean? Why is this is good? Trade-offs?
  
 Different concerns (such as making regular expressions Java 8 streamable, the logic of counting words, providing a command-line interface, etc) are implemented in separate classes. 
