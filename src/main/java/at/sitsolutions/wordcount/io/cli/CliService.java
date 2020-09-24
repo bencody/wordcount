@@ -2,23 +2,29 @@ package at.sitsolutions.wordcount.io.cli;
 
 import at.sitsolutions.wordcount.domain.WordCounter;
 
-public class CliService implements Runnable {
+import java.util.List;
+import java.util.concurrent.Callable;
 
-    private final System system;
+public class CliService implements Callable<Void> {
+
+    private final InputReader inputReader;
+    private final OutputPrinter outputPrinter;
     private final WordCounter wordCounter;
 
-    public CliService(System system, WordCounter wordCounter) {
-        this.system = system;
+    public CliService(InputReader inputReader, OutputPrinter outputPrinter, WordCounter wordCounter) {
+        this.inputReader = inputReader;
+        this.outputPrinter = outputPrinter;
         this.wordCounter = wordCounter;
     }
 
     @Override
-    public void run() {
-        system.print("Enter text: ");
+    public Void call() throws Exception {
+        outputPrinter.print("Enter text: ");
 
-        String text = system.readLine();
+        List<String> text = inputReader.readLines();
         long wordCount = wordCounter.countWords(text);
 
-        system.print("Number of words: " + wordCount);
+        outputPrinter.print("Number of words: " + wordCount);
+        return null;
     }
 }

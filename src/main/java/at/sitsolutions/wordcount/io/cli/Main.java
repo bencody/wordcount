@@ -8,16 +8,24 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        CliService cliService = createService();
+    public static void main(String[] args) throws Exception {
+        CliService cliService = createService(args);
 
-        cliService.run();
+        cliService.call();
     }
 
-    private static CliService createService() throws IOException {
+    private static CliService createService(String[] args) throws IOException {
+        MainArguments arguments = MainArguments.create(args);
         List<String> stopWords = FileUtils.readLines("src/main/resources/stopwords.txt");
         WordCounter wordCounter = new WordCounter(stopWords);
-        System system = new StdSystem();
-        return new CliService(system, wordCounter);
+        InputReader inputReader = createInputReader(arguments);
+        OutputPrinter outputPrinter = new SystemOutputPrinter();
+        return new CliService(inputReader, outputPrinter, wordCounter);
+    }
+
+    private static InputReader createInputReader(MainArguments arguments) {
+        return arguments.textInputFilePath != null
+                ? new FileInputReader(arguments.textInputFilePath)
+                : new SystemInputReader();
     }
 }

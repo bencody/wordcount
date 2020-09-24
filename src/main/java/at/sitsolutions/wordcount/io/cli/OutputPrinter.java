@@ -1,8 +1,6 @@
 package at.sitsolutions.wordcount.io.cli;
 
-public interface System {
-
-    String readLine();
+public interface OutputPrinter {
 
     void print(String text);
 }

@@ -4,6 +4,7 @@ import at.sitsolutions.wordcount.util.RegexpUtils;
 
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class WordCounter {
 
@@ -22,5 +23,13 @@ public class WordCounter {
         return RegexpUtils.streamMatches(WORD_REGEXP, text)
                 .filter((word) -> !stopWords.contains(word))
                 .count();
+    }
+
+    public long countWords(List<String> textLines) {
+        if (textLines == null) {
+            throw new IllegalArgumentException();
+        }
+        String text = String.join("\n", textLines);
+        return countWords(text);
     }
 }
