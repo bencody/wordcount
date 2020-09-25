@@ -18,9 +18,11 @@ https://ccd-school.de/coding-dojo/agility-katas/word-count-i/
 
 ### How often do you commit / push (more often is better) => Why is this is good? Trade-offs?
 
-Commits should ideally represent a working (but not necessarily complete) version. 
+Commits should ideally represent a working (but not necessarily feature-complete) version. Commits should ideally made at least once per day. 
 
-Since the iterations in this assessment are already very small, I don't always see a necessity for commits in-between. IntelliJ and Eclipse store a local history of changes, which allows one to switch back to a previous change that was not yet committed.
+Since the iterations in this assessment are already very small, I did not always see a necessity for multiple commits in-between. IntelliJ and Eclipse store a local history of changes, which allows one to switch back to a previous change that was not yet committed.
+
+Trade-offs: A feature's implementation may be split across multiple commits, making it harder to see which changes were made for a feature. If one dislikes this, one will need to execute more version control operations.  
  
 ### Are there automated unit- and integration-tests ( for this small hiring example we expect 100% test coverage) => Why is this is good? Trade-offs?
 
@@ -34,27 +36,36 @@ Example: I created `at.sitsolutions.wordcount.io.cli.StdSystem`, `at.sitsolution
  
 Different concerns (such as making regular expressions Java 8 streamable, the logic of counting words, providing a command-line interface, etc) are implemented in separate classes. 
 
-This separation makes the separate concerns more clear, easier to test, which is a good thing.
+This separation makes the software's function more clear and easier to test.
 
-A trade-off is that it involves more classes, and in such a small application, this subjectively increases its complexity. In larger applications the benefits will be more significant and obvious.
+A trade-off is that it involves more classes, and in such a small application, this subjectively increases its complexity as the reader needs to read many files. In larger applications the benefits will be more significant and obvious. As this "Word Count" application grew, I started appreciating the strict structure more and more.
 
 ### Decouple all I/O from Domain => What does it mean? Why is this good? Trade-offs? (Clean Architecture, Hexagonal Architecture, Onion Architecture)
 
-The domain logic of this application is the counting of words in a given text, and the IO logic deals with the command-line interface. Splitting these layers is currently done by having separate Java packages.
+The domain layer deals with the following:
+- Identifying words in a text.
+- Filtering out stop-words.
+- Matching against dictionary words.
+- Calculating statistics.
 
-The IO and domain separation allows the domain functionality to be made accessible via other ports (e.g. an HTTP API), also keeps the domain free from technology-related dependencies and therefore easier to understand.
+The IO/CLI layer deals with the following:
+- Bootstrapping the CLI program and parsing arguments. 
+- Reading text from either stdin or a file.
+- Printing results to stdout. 
+
+This domain/IO separation easily allows the domain's functionality to be made accessible via other IO implementations (e.g. an HTTP API). The domain layer remains free from technology-related dependencies and is therefore easier to understand and test, and it will remain unchanged if additional IO implementations are added.
 
 Trade-offs are similar to SoC. Additionally, if one were to separate the layers more strictly with (Java 9, Maven, or OSGI) modules, the project's set-up would become more complex and the build could also take a bit longer. Modules are arguably not necessary for smaller applications, though.
 
 ### Is the UI decoupled from Domain => Why is this important? Trade-offs?
 
-At the moment, the command-line interface is the UI, and it is decoupled. Similar answers as above.
+At the moment, the command-line interface is the UI, and it is decoupled. See answers as above.
 
 ### Expect you to improve your design over time by Refactoring. => Why is this important? Trade-offs? What code-smells do know?
 
-The combination of 1) following SoC, SOLID, and domain/IO separation principles and 2) writing good tests is a recipe for code that is easy to change as business requirements change.
+The combination of 1) following SoC, SOLID, and domain/IO separation principles and 2) writing good tests is a recipe for code that can easily get adapted to changing business requirements.
 
-As code changes over time, it tends to become less well-structured and therefore more difficult to understand. Refactoring is a measure against this gradual entropy and allows it to remain maintainable and modifyable.
+As code changes over time, it tends to become less well-structured and therefore more difficult to understand. Refactoring is a measure against this gradual entropy and allows it to remain maintainable.
 
 A trade-off of refactoring is that it has an implementation, code-review, and testing cost. Refactoring end-of-life software may not be economical.      
  
@@ -72,4 +83,16 @@ Currently, I would say that it is. The principles of SoC and separation of domai
 
 ### Switching from on iteration to the next one we expect compilable code which has 100% test coverage and all tests are green and the code is "CLEAN" and requirements of iteration are fulfilled. => What does Clean Code mean to you?
 
-Answer:  
+A couple of "clean code" attributes:
+
+- Principles such as SoC, SOLID, and domain/IO separation are adhered to.
+- The code is self-explanatory. 
+  - Comments are used only where they are valuable.
+  - Artifacts have meaningful names.
+  - Common architectural concepts, design patterns, language idioms, etc. are used.
+- There is no waste:
+  - There is no unnecessary duplication.
+  - There are no unused artifacts littering the code-base (e.g. commented-out code, unused classes, unused libraries).
+- One cannot tell that multiple developers worked on the code:
+   - Consistent formatting.
+   - Consistent use of language/framework/library features and patterns.
