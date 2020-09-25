@@ -4,8 +4,8 @@ import at.sitsolutions.wordcount.domain.Result;
 import at.sitsolutions.wordcount.domain.Word;
 import at.sitsolutions.wordcount.domain.WordCounter;
 
-import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public class CliService implements Callable<Void> {
@@ -22,12 +22,12 @@ public class CliService implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        String text = inputReader.readText();
-
-        Result result = wordCounter.countWords(text);
-        printMainResults(result);
-        printIndexResult(result);
-
+        for (Optional<String> text = inputReader.readNext(); text.isPresent(); text = inputReader.readNext()) {
+            Result result = wordCounter.countWords(text.get());
+            printMainResults(result);
+            printIndexResult(result);
+            outputPrinter.println("");
+        }
         return null;
     }
 

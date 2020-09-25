@@ -12,6 +12,7 @@ https://ccd-school.de/coding-dojo/agility-katas/word-count-i/
 - Average word count output should include exactly 2 decimal places and use English number formatting.
 - Unknown word count should be calculated on unique words, not all words.
 - Word index may be ordered by occurrence. The requirement is not explicit about the ordering.
+- https://ccd-school.de/coding-dojo/agility-katas/word-count-ix/ example output for input "a bb ccc dddd" is wrong. The word "a" is a stop-word and should not be considered in the results.
 
 ## Checklist
 

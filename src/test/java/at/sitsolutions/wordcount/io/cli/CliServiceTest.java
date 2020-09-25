@@ -4,10 +4,7 @@ import at.sitsolutions.wordcount.domain.Options;
 import at.sitsolutions.wordcount.domain.WordCounter;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +23,8 @@ public class CliServiceTest {
         cliService.call();
 
         assertThat(outputPrinter.printLineCalls).containsExactly(
-                "Number of words: 4, unique: 4; average word length: 4.25 characters"
+                "Number of words: 4, unique: 4; average word length: 4.25 characters",
+                "" // Last empty line
         );
     }
 
@@ -45,7 +43,8 @@ public class CliServiceTest {
                 "Mary",
                 "had",
                 "little",
-                "lamb"
+                "lamb",
+                "" // Last empty line
         );
     }
 
@@ -64,21 +63,23 @@ public class CliServiceTest {
                 "Mary*",
                 "had",
                 "little",
-                "lamb*"
+                "lamb*",
+                "" // Last empty line
         );
     }
 
-
     private static final class MockInputReader implements InputReader {
-        private final String readText;
+        private final Stack<String> textStack = new Stack<>();
 
-        public MockInputReader(String readText) {
-            this.readText = readText;
+        public MockInputReader(String... texts) {
+            for (String text : texts) {
+                textStack.push(text);
+            }
         }
 
         @Override
-        public String readText() {
-            return readText;
+        public Optional<String> readNext() {
+            return textStack.empty() ? Optional.empty() : Optional.of(textStack.pop());
         }
     }
 
