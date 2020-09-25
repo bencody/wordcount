@@ -1,7 +1,5 @@
 package at.sitsolutions.wordcount.io.cli;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class SystemInputReader implements InputReader {
@@ -13,10 +11,10 @@ public class SystemInputReader implements InputReader {
     }
 
     @Override
-    public List<String> readLines() {
+    public String readText() {
         outputPrinter.print("Enter text: ");
 
         Scanner in = new Scanner(java.lang.System.in);
-        return Collections.singletonList(in.nextLine());
+        return in.nextLine();
     }
 }

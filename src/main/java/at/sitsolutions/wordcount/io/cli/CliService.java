@@ -22,7 +22,8 @@ public class CliService implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        List<String> text = inputReader.readLines();
+        String text = inputReader.readText();
+
         Result result = wordCounter.countWords(text);
         printMainResults(result);
         printIndexResult(result);

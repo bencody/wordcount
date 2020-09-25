@@ -1,6 +1,5 @@
 package at.sitsolutions.wordcount.domain;
 
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -21,12 +20,7 @@ public class WordCounterTest {
         WordCounter wordCounter = new WordCounter(new Options(Collections.emptyList(), Optional.empty(), false));
 
         assertThatThrownBy(() ->
-                wordCounter.countWords((String) null)
-        ).isInstanceOf(IllegalArgumentException.class);
-
-        //noinspection unchecked,rawtypes
-        assertThatThrownBy(() ->
-                wordCounter.countWords((List) null)
+                wordCounter.countWords(null)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -81,16 +75,6 @@ public class WordCounterTest {
 
         assertThat(result.words).extracting(word -> word.value).containsExactly("Mary", "had", "little", "lamb");
         assertThat(result.totalCount).isEqualTo(4L);
-    }
-
-    @Test
-    public void strings_in_separate_lines_are_considered_separate_words() {
-        WordCounter wordCounter = new WordCounter(new Options(Collections.emptyList(), Optional.empty(), false));
-
-        Result result = wordCounter.countWords(Lists.newArrayList("Mary had", "a little", "lamb"));
-
-        assertThat(result.words).extracting(word -> word.value).containsExactly("Mary", "had", "a", "little", "lamb");
-        assertThat(result.totalCount).isEqualTo(5L);
     }
 
     @Test

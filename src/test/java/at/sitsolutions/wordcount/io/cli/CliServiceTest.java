@@ -4,7 +4,10 @@ import at.sitsolutions.wordcount.domain.Options;
 import at.sitsolutions.wordcount.domain.WordCounter;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +18,7 @@ public class CliServiceTest {
 
     @Test
     public void reads_text_input_and_outputs_word_count() throws Exception {
-        InputReader inputReader = new MockInputReader(Collections.singletonList("Mary had a little lamb"));
+        InputReader inputReader = new MockInputReader("Mary had a little lamb");
         MockOutputPrinter outputPrinter = new MockOutputPrinter();
         WordCounter wordCounter = new WordCounter(new Options(STOP_WORDS, Optional.empty(), false));
         CliService cliService = new CliService(inputReader, outputPrinter, wordCounter);
@@ -29,7 +32,7 @@ public class CliServiceTest {
 
     @Test
     public void index_is_only_printed_if_requested() throws Exception {
-        InputReader inputReader = new MockInputReader(Collections.singletonList("Mary had a little lamb"));
+        InputReader inputReader = new MockInputReader("Mary had a little lamb");
         MockOutputPrinter outputPrinter = new MockOutputPrinter();
         WordCounter wordCounter = new WordCounter(new Options(STOP_WORDS, Optional.empty(), true));
         CliService cliService = new CliService(inputReader, outputPrinter, wordCounter);
@@ -48,7 +51,7 @@ public class CliServiceTest {
 
     @Test
     public void known_words_are_only_printed_if_dictionary_is_defined() throws Exception {
-        InputReader inputReader = new MockInputReader(Collections.singletonList("Mary had a little lamb"));
+        InputReader inputReader = new MockInputReader("Mary had a little lamb");
         MockOutputPrinter outputPrinter = new MockOutputPrinter();
         WordCounter wordCounter = new WordCounter(new Options(STOP_WORDS, DICTIONARY, true));
         CliService cliService = new CliService(inputReader, outputPrinter, wordCounter);
@@ -67,15 +70,15 @@ public class CliServiceTest {
 
 
     private static final class MockInputReader implements InputReader {
-        private final List<String> readLine;
+        private final String readText;
 
-        public MockInputReader(List<String> readLine) {
-            this.readLine = readLine;
+        public MockInputReader(String readText) {
+            this.readText = readText;
         }
 
         @Override
-        public List<String> readLines() {
-            return readLine;
+        public String readText() {
+            return readText;
         }
     }
 

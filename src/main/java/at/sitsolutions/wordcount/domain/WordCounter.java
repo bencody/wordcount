@@ -30,12 +30,4 @@ public class WordCounter {
                 .collect(Collectors.toList());
         return new Result(words);
     }
-
-    public Result countWords(List<String> textLines) {
-        if (textLines == null) {
-            throw new IllegalArgumentException();
-        }
-        String text = String.join("\n", textLines);
-        return countWords(text);
-    }
 }

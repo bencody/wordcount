@@ -3,7 +3,6 @@ package at.sitsolutions.wordcount.io.cli;
 import at.sitsolutions.wordcount.util.FileUtils;
 
 import java.io.IOException;
-import java.util.List;
 
 public class FileInputReader implements InputReader {
 
@@ -14,7 +13,7 @@ public class FileInputReader implements InputReader {
     }
 
     @Override
-    public List<String> readLines() throws IOException {
-        return FileUtils.readLines(filePath);
+    public String readText() throws IOException {
+        return String.join("\n", FileUtils.readLines(filePath));
     }
 }
