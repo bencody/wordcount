@@ -1,6 +1,7 @@
 package at.sitsolutions.wordcount.io.cli;
 
 import at.sitsolutions.wordcount.domain.Result;
+import at.sitsolutions.wordcount.domain.Word;
 import at.sitsolutions.wordcount.domain.WordCounter;
 
 import java.util.List;
@@ -12,33 +13,48 @@ public class CliService implements Callable<Void> {
     private final InputReader inputReader;
     private final OutputPrinter outputPrinter;
     private final WordCounter wordCounter;
-    private final boolean printIndex;
 
-    public CliService(InputReader inputReader, OutputPrinter outputPrinter, WordCounter wordCounter, boolean printIndex) {
+    public CliService(InputReader inputReader, OutputPrinter outputPrinter, WordCounter wordCounter) {
         this.inputReader = inputReader;
         this.outputPrinter = outputPrinter;
         this.wordCounter = wordCounter;
-        this.printIndex = printIndex;
     }
 
     @Override
     public Void call() throws Exception {
+        // TODO bug?
         outputPrinter.print("Enter text: ");
 
         List<String> text = inputReader.readLines();
         Result result = wordCounter.countWords(text);
+        printMainResults(result);
+        printIndexResult(result);
 
+        return null;
+    }
+
+    private void printMainResults(Result result) {
         String resultMessage = String.format(Locale.US, "Number of words: %s, unique: %s; average word length: %.2f characters",
                 result.totalCount, result.uniqueCount, result.averageWordLength);
         outputPrinter.println(resultMessage);
+    }
 
-        if (this.printIndex) {
-            outputPrinter.println("Index:");
-            for (String word : result.words) {
-                outputPrinter.println(word);
-            }
+    private void printIndexResult(Result result) {
+        if (!wordCounter.options.printIndex) {
+            return;
         }
 
-        return null;
+        if (wordCounter.options.dictionary.isPresent()) {
+            outputPrinter.println(String.format("Index (unknown: %s):", result.unknownWordCount));
+            for (Word word : result.words) {
+                outputPrinter.println(word.value + (word.known ? "" : "*"));
+            }
+
+        } else {
+            outputPrinter.println("Index:");
+            for (Word word : result.words) {
+                outputPrinter.println(word.value);
+            }
+        }
     }
 }

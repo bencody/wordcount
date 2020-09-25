@@ -45,4 +45,20 @@ public class MainTest {
                 "lamb" + LINE_SEPARATOR
         );
     }
+
+    @Test
+    public void dictionary_is_supported() throws Exception {
+        OutputStream outputStream = MockSystemUtils.setOut();
+        MockSystemUtils.setIn("Mary had a little lamb");
+
+        Main.main(new String[]{"-index", "-dictionary=src/test/resources/dictionary.txt"});
+
+        assertThat(outputStream.toString()).isEqualTo("Enter text: Number of words: 4, unique: 4; average word length: 4.25 characters" + LINE_SEPARATOR +
+                "Index (unknown: 2):" + LINE_SEPARATOR +
+                "Mary*" + LINE_SEPARATOR +
+                "had" + LINE_SEPARATOR +
+                "little" + LINE_SEPARATOR +
+                "lamb*" + LINE_SEPARATOR
+        );
+    }
 }

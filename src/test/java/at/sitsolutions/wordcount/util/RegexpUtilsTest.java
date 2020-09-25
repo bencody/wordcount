@@ -21,6 +21,7 @@ public class RegexpUtilsTest {
         @Test
         public void requires_non_null_pattern() {
             assertThatThrownBy(() -> {
+                //noinspection ConstantConditions
                 RegexpUtils.streamMatches(null, "text");
             }).isInstanceOf(IllegalArgumentException.class);
         }
@@ -28,6 +29,7 @@ public class RegexpUtilsTest {
         @Test
         public void requires_non_null_text() {
             assertThatThrownBy(() -> {
+                //noinspection ConstantConditions
                 RegexpUtils.streamMatches(Pattern.compile("."), null);
             }).isInstanceOf(IllegalArgumentException.class);
         }

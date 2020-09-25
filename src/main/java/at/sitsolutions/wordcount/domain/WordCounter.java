@@ -10,10 +10,10 @@ public class WordCounter {
 
     private static final Pattern WORD_REGEXP = Pattern.compile("(\\b[a-zA-Z-]+\\b)", Pattern.UNICODE_CHARACTER_CLASS);
 
-    private final List<String> stopWords;
+    public final Options options;
 
-    public WordCounter(List<String> stopWords) {
-        this.stopWords = stopWords;
+    public WordCounter(Options options) {
+        this.options = options;
     }
 
     public Result countWords(String text) {
@@ -21,15 +21,14 @@ public class WordCounter {
             throw new IllegalArgumentException();
         }
 
-        List<String> words = RegexpUtils.streamMatches(WORD_REGEXP, text)
-                .filter((word) -> !stopWords.contains(word))
+        List<Word> words = RegexpUtils.streamMatches(WORD_REGEXP, text)
+                .filter((word) -> !options.stopWords.contains(word))
+                .map(word -> {
+                    boolean known = options.dictionary.isPresent() && options.dictionary.get().contains(word);
+                    return new Word(word, known);
+                })
                 .collect(Collectors.toList());
-
-        long totalCount = words.size();
-        long uniqueCount = words.stream().distinct().count();
-        double averageWordLength = words.stream().mapToInt(String::length).average().orElse(0d);
-
-        return new Result(words, totalCount, uniqueCount, averageWordLength);
+        return new Result(words);
     }
 
     public Result countWords(List<String> textLines) {
