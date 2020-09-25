@@ -100,6 +100,8 @@ public class WordCounterTest {
                 new Word("b", false),
                 new Word("c", false)
         );
+        assertThat(result.totalCount).isEqualTo(3L);
+        assertThat(result.uniqueCount).isEqualTo(3L);
         assertThat(result.unknownWordCount).isEqualTo(3);
     }
 
@@ -129,6 +131,8 @@ public class WordCounterTest {
 
         Result result = wordCounter.countWords("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall.");
 
+        assertThat(result.totalCount).isEqualTo(10L);
+        assertThat(result.uniqueCount).isEqualTo(8L);
         assertThat(result.unknownWordCount).isEqualTo(1L);
     }
 }
