@@ -23,7 +23,6 @@ public class CliServiceTest {
         cliService.call();
 
         assertThat(outputPrinter.printLineCalls).containsExactly(
-                "Enter text: ",
                 "Number of words: 4, unique: 4; average word length: 4.25 characters"
         );
     }
@@ -38,7 +37,6 @@ public class CliServiceTest {
         cliService.call();
 
         assertThat(outputPrinter.printLineCalls).containsExactly(
-                "Enter text: ",
                 "Number of words: 4, unique: 4; average word length: 4.25 characters",
                 "Index:",
                 "Mary",
@@ -58,7 +56,6 @@ public class CliServiceTest {
         cliService.call();
 
         assertThat(outputPrinter.printLineCalls).containsExactly(
-                "Enter text: ",
                 "Number of words: 4, unique: 4; average word length: 4.25 characters",
                 "Index (unknown: 2):",
                 "Mary*",

@@ -27,7 +27,7 @@ public class MainTest {
 
         Main.main(new String[]{"src/test/resources/mytext.txt"});
 
-        assertThat(outputStream.toString()).isEqualTo("Enter text: Number of words: 4, unique: 4; average word length: 4.25 characters" + LINE_SEPARATOR);
+        assertThat(outputStream.toString()).isEqualTo("Number of words: 4, unique: 4; average word length: 4.25 characters" + LINE_SEPARATOR);
     }
 
     @Test

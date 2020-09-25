@@ -18,8 +18,8 @@ public class Main {
 
     private static CliService createService(String[] args) throws IOException {
         MainArguments arguments = MainArguments.create(args);
-        InputReader inputReader = createInputReader(arguments);
         OutputPrinter outputPrinter = new SystemOutputPrinter();
+        InputReader inputReader = createInputReader(arguments, outputPrinter);
         WordCounter wordCounter = createWordCounter(arguments);
         return new CliService(inputReader, outputPrinter, wordCounter);
     }
@@ -33,9 +33,9 @@ public class Main {
         return new WordCounter(options);
     }
 
-    private static InputReader createInputReader(MainArguments arguments) {
+    private static InputReader createInputReader(MainArguments arguments, OutputPrinter outputPrinter) {
         return arguments.textInputFilePath != null
                 ? new FileInputReader(arguments.textInputFilePath)
-                : new SystemInputReader();
+                : new SystemInputReader(outputPrinter);
     }
 }
