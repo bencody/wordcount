@@ -29,6 +29,18 @@ public class MainTest {
     }
 
     @Test
+    public void outputs_no_results_if_blank_input_is_given() throws Exception {
+        OutputStream outputStream = MockSystemUtils.setOut();
+        MockSystemUtils.setIn(" ");
+
+        Main.main(new String[]{});
+
+        assertThat(outputStream.toString()).isEqualTo(
+                        "Enter text: "
+        );
+    }
+
+    @Test
     public void reads_text_input_and_outputs_word_count_excluding_stop_words_from_file() throws Exception {
         OutputStream outputStream = MockSystemUtils.setOut();
 

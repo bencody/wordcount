@@ -86,7 +86,7 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(7L);
         assertThat(result.uniqueCount).isEqualTo(6L);
-        assertThat(result.averageWordLength).isEqualTo((45d / 7)); // avg(13, 3, 4, 13, 3, 5, 4) = 45/7
+        assertThat(result.averageLength).isEqualTo((45d / 7)); // avg(13, 3, 4, 13, 3, 5, 4) = 45/7
     }
 
     @Test
@@ -102,7 +102,7 @@ public class WordCounterTest {
         );
         assertThat(result.totalCount).isEqualTo(3L);
         assertThat(result.uniqueCount).isEqualTo(3L);
-        assertThat(result.unknownWordCount).isEqualTo(3);
+        assertThat(result.unknownCount).isEqualTo(3);
     }
 
     @Test
@@ -133,6 +133,6 @@ public class WordCounterTest {
 
         assertThat(result.totalCount).isEqualTo(10L);
         assertThat(result.uniqueCount).isEqualTo(8L);
-        assertThat(result.unknownWordCount).isEqualTo(1L);
+        assertThat(result.unknownCount).isEqualTo(1L);
     }
 }

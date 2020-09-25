@@ -20,7 +20,7 @@ public class SystemInputReader implements InputReader {
 
         try {
             String nextLine = scanner.nextLine();
-            return nextLine.isEmpty()
+            return nextLine.trim().isEmpty()
                     ? Optional.empty()
                     : Optional.of(nextLine);
         } catch (NoSuchElementException e) {

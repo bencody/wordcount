@@ -33,7 +33,7 @@ public class CliService implements Callable<Void> {
 
     private void printMainResults(Result result) {
         String resultMessage = String.format(Locale.US, "Number of words: %s, unique: %s; average word length: %.2f characters",
-                result.totalCount, result.uniqueCount, result.averageWordLength);
+                result.totalCount, result.uniqueCount, result.averageLength);
         outputPrinter.println(resultMessage);
     }
 
@@ -43,7 +43,7 @@ public class CliService implements Callable<Void> {
         }
 
         if (wordCounter.options.dictionary.isPresent()) {
-            outputPrinter.println(String.format("Index (unknown: %s):", result.unknownWordCount));
+            outputPrinter.println(String.format("Index (unknown: %s):", result.unknownCount));
             for (Word word : result.words) {
                 outputPrinter.println(word.value + (word.known ? "" : "*"));
             }
